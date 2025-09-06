@@ -1,0 +1,5 @@
+{
+  "name": "RexJob: AI Resume Optimizer",
+  "description": "An AI-powered web application to help users optimize their resumes for ATS, find matching jobs, and build professional resumes from scratch with live previews and customizable templates.",
+  "requestFramePermissions": []
+}
