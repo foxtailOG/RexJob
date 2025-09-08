@@ -1,15 +1,15 @@
 import type { AnalysisResult } from '../types';
 
-// Local resume analysis without API dependency
+// Resume analysis service using algorithmic scoring
 export const analyzeResumeForATS = async (resumeText: string): Promise<AnalysisResult> => {
-  // Simulate processing time
+  // Simulate processing time for better user experience
   await new Promise(resolve => setTimeout(resolve, 2000));
   
   const text = resumeText.toLowerCase();
   const words = text.split(/\s+/);
   const wordCount = words.length;
   
-  // Calculate ATS score based on various factors
+  // Calculate ATS score based on resume best practices
   let score = 50; // Base score
   
   // Check for contact information
@@ -176,4 +176,4 @@ export const analyzeResumeForATS = async (resumeText: string): Promise<AnalysisR
     recommendations,
     suggestedJobs: suggestedJobs.slice(0, 5)
   };
-};
+}

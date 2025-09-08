@@ -54,11 +54,11 @@ const LandingPage: React.FC<LandingPageProps> = ({ onNavigate }) => {
             <main className="container mx-auto px-6">
                 <section className="py-24 md:py-32 flex flex-col justify-center items-center text-center">
                     <h1 className="text-5xl md:text-7xl font-extrabold text-primary-900 leading-tight">
-                        Optimize Your Resume for <br />
-                        <span className="text-secondary-600">ATS Success</span>
+                        Professional Resume <br />
+                        <span className="text-secondary-600">Optimizer</span>
                     </h1>
                     <p className="mt-6 text-lg md:text-xl text-primary-700 max-w-3xl">
-                        Beat applicant tracking systems, get matched with perfect jobs, and create stunning resumes.
+                        Optimize your resume for applicant tracking systems, get matched with perfect jobs, and create professional resumes.
                     </p>
                     <div className="mt-10 flex flex-col sm:flex-row space-y-4 sm:space-y-0 sm:space-x-4">
                         <button
@@ -84,17 +84,17 @@ const LandingPage: React.FC<LandingPageProps> = ({ onNavigate }) => {
                         <FeatureCard
                             icon={<FeatureIcon1 />}
                             title="ATS Optimization"
-                            description="Our AI analyzes your resume against ATS requirements and provides detailed optimization recommendations."
+                            description="Advanced algorithms analyze your resume against ATS requirements and provide detailed optimization recommendations."
                         />
                         <FeatureCard
                             icon={<FeatureIcon2 />}
                             title="Job Matching"
-                            description="Get personalized job recommendations based on your skills, experience, and career goals."
+                            description="Smart matching system provides personalized job recommendations based on your skills, experience, and career goals."
                         />
                         <FeatureCard
                             icon={<FeatureIcon3 />}
                             title="Resume Builder"
-                            description="Create professional resumes with our customizable templates and drag-and-drop editor."
+                            description="Create professional resumes with customizable templates and intuitive editing tools."
                         />
                     </div>
                 </section>

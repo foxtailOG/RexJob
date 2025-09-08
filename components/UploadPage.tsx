@@ -1,5 +1,5 @@
 import React, { useState, useCallback, useRef } from 'react';
-import { analyzeResumeForATS } from '../services/geminiService';
+import { analyzeResumeForATS } from '../services/resumeAnalyzer';
 import type { AnalysisResult } from '../types';
 
 declare const pdfjsLib: any;
@@ -37,6 +37,7 @@ const UploadPage: React.FC<UploadPageProps> = ({ onBackToHome, onAnalysisComplet
         }
         setIsLoading(true);
         setLoadingMessage('Analyzing with AI...');
+        setLoadingMessage('Analyzing resume...');
         setError(null);
         try {
             const result = await analyzeResumeForATS(resumeText);
@@ -183,7 +184,7 @@ const UploadPage: React.FC<UploadPageProps> = ({ onBackToHome, onAnalysisComplet
                             disabled={isLoading || !resumeText}
                             className="w-full sm:w-auto px-10 py-4 bg-primary-600 text-white font-semibold rounded-lg shadow-lg shadow-primary-300/60 hover:bg-primary-700 focus:outline-none focus:ring-2 focus:ring-primary-500 focus:ring-opacity-75 transition-all duration-300 disabled:bg-gray-400 disabled:shadow-none disabled:cursor-not-allowed flex items-center justify-center mx-auto"
                         >
-                            {isLoading ? <><LoadingSpinner /> <span className="ml-3">{loadingMessage}</span></> : 'Analyze with AI'}
+                            {isLoading ? <><LoadingSpinner /> <span className="ml-3">{loadingMessage}</span></> : 'Analyze Resume'}
                         </button>
                     </div>
                 </div>
