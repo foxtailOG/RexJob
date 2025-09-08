@@ -1,5 +1,5 @@
 import React, { useState, useCallback, useRef } from 'react';
-import { analyzeResumeForATS } from '../services/geminiService';
+import { analyzeResumeForATS } from '../services/resumeAnalyzer';
 import type { AnalysisResult } from '../types';
 
 declare const pdfjsLib: any;
