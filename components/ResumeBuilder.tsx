@@ -6,7 +6,6 @@ declare const html2canvas: any;
 
 // --- ICONS ---
 const DownloadIcon: React.FC = () => <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" /></svg>;
-const SaveIcon: React.FC = () => <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 7H5a2 2 0 00-2 2v9a2 2 0 002 2h14a2 2 0 002-2V9a2 2 0 00-2-2h-3m-1 4l-3 3m0 0l-3-3m3 3V4" /></svg>;
 const AddIcon: React.FC = () => <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 mr-1" viewBox="0 0 20 20" fill="currentColor"><path fillRule="evenodd" d="M10 5a1 1 0 011 1v3h3a1 1 0 110 2h-3v3a1 1 0 11-2 0v-3H6a1 1 0 110-2h3V6a1 1 0 011-1z" clipRule="evenodd" /></svg>;
 const TrashIcon: React.FC<{onClick: () => void}> = ({onClick}) => <button onClick={onClick} className="text-slate-400 hover:text-red-500 transition-colors"><svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" viewBox="0 0 20 20" fill="currentColor"><path fillRule="evenodd" d="M9 2a1 1 0 00-.894.553L7.382 4H4a1 1 0 000 2v10a2 2 0 002 2h8a2 2 0 002-2V6a1 1 0 100-2h-3.382l-.724-1.447A1 1 0 0011 2H9zM7 8a1 1 0 012 0v6a1 1 0 11-2 0V8zm5-1a1 1 0 00-1 1v6a1 1 0 102 0V8a1 1 0 00-1-1z" clipRule="evenodd" /></svg></button>;
 const WorkIcon: React.FC = () => <svg xmlns="http://www.w3.org/2000/svg" className="mx-auto h-12 w-12 text-slate-400" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1}><path strokeLinecap="round" strokeLinejoin="round" d="M21 13.255A23.931 23.931 0 0112 15c-3.183 0-6.22-.62-9-1.745M16 6V4a2 2 0 00-2-2h-4a2 2 0 00-2 2v2m4 6h.01M5 20h14a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" /></svg>;
@@ -478,14 +477,14 @@ const ResumeTemplate: React.FC<{ state: ResumeState }> = ({ state }) => {
         let content: React.ReactNode = null;
         switch (key) {
             case 'professionalSummary':
-                if (data.professionalSummary) content = <div data-type="item">{data.professionalSummary}</div>;
+                if (data.professionalSummary) content = <div data-type="item" className="break-words">{data.professionalSummary}</div>;
                 break;
             case 'workExperience':
                  content = data.workExperience.map(exp => (
                     <div key={exp.id} data-type="item">
                         <div className="flex justify-between font-semibold"><span>{exp.jobTitle || "Job Title"}</span><span className="text-gray-600">{exp.startDate} - {exp.endDate}</span></div>
                         <div className="italic text-gray-600">{exp.company || "Company"}</div>
-                        <ul className="text-gray-700 whitespace-pre-wrap mt-1 list-disc list-inside">
+                        <ul className="text-gray-700 whitespace-pre-wrap mt-1 list-disc list-inside break-words">
                             {exp.description.split('\n').map((line, i) => line.trim() && <li key={i}>{line.replace(/^-/, '').trim()}</li>)}
                         </ul>
                     </div>
@@ -504,7 +503,7 @@ const ResumeTemplate: React.FC<{ state: ResumeState }> = ({ state }) => {
                     <div key={proj.id} data-type="item">
                         <div className="flex justify-between font-semibold items-center"><span>{proj.projectName || "Project Name"}</span>{proj.link && <a href={`https://${proj.link}`} target="_blank" rel="noopener noreferrer" className="text-blue-600 hover:underline text-sm">View Project</a>}</div>
                         {proj.technologies && <div className="italic text-gray-600 text-sm">Technologies: {proj.technologies}</div>}
-                        <p className="text-gray-700 whitespace-pre-wrap mt-1">{proj.description}</p>
+                        <p className="text-gray-700 whitespace-pre-wrap mt-1 break-words">{proj.description}</p>
                     </div>
                 ));
                 break;
@@ -513,7 +512,7 @@ const ResumeTemplate: React.FC<{ state: ResumeState }> = ({ state }) => {
                     <div key={cert.id} data-type="item">
                         <div className="flex justify-between font-semibold"><span>{cert.name || "Certification Name"}</span><span className="text-gray-600">{cert.date}</span></div>
                         <div className="italic text-gray-600">{cert.organization || "Issuing Organization"}</div>
-                        {cert.about && <p className="text-gray-700 whitespace-pre-wrap mt-1 text-sm">{cert.about}</p>}
+                        {cert.about && <p className="text-gray-700 whitespace-pre-wrap mt-1 text-sm break-words">{cert.about}</p>}
                     </div>
                 ));
                 break;
@@ -784,42 +783,20 @@ interface ResumeBuilderProps {
 const ResumeBuilder: React.FC<ResumeBuilderProps> = ({ onBackToHome }) => {
     const [state, dispatch] = useReducer(resumeReducer, initialState);
     const resumeRef = useRef<HTMLDivElement>(null);
-    const [isSaving, setIsSaving] = useState(false);
-    const [showSaved, setShowSaved] = useState(false);
-    
-    useEffect(() => {
-        try {
-            const savedState = localStorage.getItem('resumeState');
-            if (savedState) {
-                const parsedState = JSON.parse(savedState);
-                if(parsedState.data && parsedState.style) {
-                    dispatch({ type: 'LOAD_STATE', payload: parsedState });
-                }
-            }
-        } catch (error) {
-            console.error("Failed to load state from localStorage", error);
-        }
-    }, []);
-
-    const handleSave = () => {
-        setIsSaving(true);
-        try {
-            localStorage.setItem('resumeState', JSON.stringify(state));
-            setTimeout(() => {
-                setIsSaving(false);
-                setShowSaved(true);
-                setTimeout(() => setShowSaved(false), 2000);
-            }, 500);
-        } catch (error) {
-             console.error("Failed to save state to localStorage", error);
-             setIsSaving(false);
-        }
-    };
 
     const handleDownloadPdf = async () => {
-        const element = resumeRef.current;
-        if (!element) {
+        const resumeContainer = resumeRef.current;
+        if (!resumeContainer) {
             alert('Could not find resume content to download.');
+            return;
+        }
+
+        const pageElements = Array.from(resumeContainer.children).filter(
+            (el): el is HTMLElement => el instanceof HTMLElement && el.classList.contains('aspect-[8.5/11]')
+        );
+        
+        if (pageElements.length === 0) {
+            alert('Resume preview is empty.');
             return;
         }
 
@@ -830,38 +807,37 @@ const ResumeBuilder: React.FC<ResumeBuilderProps> = ({ onBackToHome }) => {
             format: 'a4',
         });
 
+        const pdfWidth = pdf.internal.pageSize.getWidth();
+        const pdfHeight = pdf.internal.pageSize.getHeight();
+
         try {
-             const canvas = await html2canvas(element, {
-                scale: 2,
-                useCORS: true,
-                logging: false,
-                width: element.offsetWidth,
-                windowWidth: element.scrollWidth,
-                windowHeight: element.scrollHeight,
-            });
+            for (let i = 0; i < pageElements.length; i++) {
+                const pageElement = pageElements[i];
+                
+                // Temporarily remove shadow for a cleaner capture
+                const originalBoxShadow = pageElement.style.boxShadow;
+                pageElement.style.boxShadow = 'none';
 
-            const imgData = canvas.toDataURL('image/png');
-            const pdfWidth = pdf.internal.pageSize.getWidth();
-            const pdfHeight = pdf.internal.pageSize.getHeight();
-            
-            const canvasWidth = canvas.width;
-            const canvasHeight = canvas.height;
-            const ratio = canvasWidth / pdfWidth;
-            const totalImgHeight = canvasHeight / ratio;
+                const canvas = await html2canvas(pageElement, {
+                    scale: 2, // Use a higher scale for better resolution
+                    useCORS: true,
+                    logging: false,
+                });
+                
+                // Restore the shadow style after capture
+                pageElement.style.boxShadow = originalBoxShadow;
 
-            let heightLeft = totalImgHeight;
-            let position = 0;
+                const imgData = canvas.toDataURL('image/png');
 
-            pdf.addImage(imgData, 'PNG', 0, position, pdfWidth, totalImgHeight, undefined, 'FAST');
-            heightLeft -= pdfHeight;
-
-            while (heightLeft > 0) {
-               position = position - pdfHeight;
-               pdf.addPage();
-               pdf.addImage(imgData, 'PNG', 0, position, pdfWidth, totalImgHeight, undefined, 'FAST');
-               heightLeft -= pdfHeight;
+                if (i > 0) {
+                    pdf.addPage();
+                }
+                
+                // The page element has an A4 aspect ratio, so the image should fit the PDF page.
+                pdf.addImage(imgData, 'PNG', 0, 0, pdfWidth, pdfHeight);
             }
-            pdf.save(`${state.data.personalInfo.fullName.replace(' ','_') || 'Resume'}_Resume.pdf`);
+
+            pdf.save(`${state.data.personalInfo.fullName.replace(/ /g,'_') || 'Resume'}_Resume.pdf`);
 
         } catch(error) {
              console.error(`Error processing PDF:`, error);
@@ -881,10 +857,6 @@ const ResumeBuilder: React.FC<ResumeBuilderProps> = ({ onBackToHome }) => {
                     </button>
                     <h1 className="text-xl font-bold text-primary-800">Resume Builder</h1>
                     <div className="flex space-x-3">
-                         <button onClick={handleSave} className="flex items-center justify-center px-4 py-2 bg-white text-primary-700 font-semibold rounded-lg border border-slate-300/80 shadow-sm hover:bg-slate-50 transition-all text-sm disabled:opacity-50" disabled={isSaving}>
-                            {isSaving ? <svg className="animate-spin h-5 w-5 mr-2" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"><circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle><path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path></svg> : <SaveIcon />}
-                            {isSaving ? 'Saving...' : showSaved ? 'Saved!' : 'Save Draft'}
-                        </button>
                         <button onClick={handleDownloadPdf} className="flex items-center px-4 py-2 bg-secondary-600 text-white font-semibold rounded-lg shadow-md shadow-secondary-500/40 hover:bg-secondary-500 transition-all text-sm">
                             <DownloadIcon /> Download PDF
                         </button>
