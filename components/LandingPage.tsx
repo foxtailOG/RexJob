@@ -1,7 +1,6 @@
 import React from 'react';
 import type { Page } from '../App';
 import LogoIcon from './icons/LogoIcon';
-import ThemeToggle from './common/ThemeToggle';
 
 const FeatureIcon1: React.FC = () => (
     <svg xmlns="http://www.w3.org/2000/svg" className="h-8 w-8 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
@@ -51,7 +50,7 @@ const LandingPage: React.FC<LandingPageProps> = ({ onNavigate }) => {
                         <LogoIcon />
                         <span className="text-2xl font-bold ml-2 text-primary-800 dark:text-primary-100">RexJob</span>
                     </div>
-                    <ThemeToggle />
+                    {/* Theme toggle removed */}
                 </div>
             </header>
 
