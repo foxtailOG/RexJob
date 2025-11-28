@@ -1,8 +1,5 @@
-<img width="1341" height="939" alt="image" src="https://github.com/user-attachments/assets/17aa3132-05af-495a-bf9e-c8815b5e47dc" />
 
-
-<img width="1273" height="958" alt="image" src="https://github.com/user-attachments/assets/7d203444-170e-4a8f-8f97-e7de15376114" />
-
+<img width="1389" height="898" alt="Screenshot 2025-11-11 210703" src="https://github.com/user-attachments/assets/76aab654-fc12-4ad3-97ef-5e2eb85e8607" />
 
 
 # Run and deploy your app
