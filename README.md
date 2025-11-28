@@ -16,4 +16,4 @@
 2. Set the `VITE_GEMINI_API_KEY` in [.env.local](.env.local) to your Gemini API key
 3. Run the app:
    `npm run dev`
-https://github.com/foxtailOG/Resumeapp.git
+live server on -https://rex-job.vercel.app
