@@ -4,8 +4,6 @@
 
 # Run and deploy your app
 
-
-
 ## Run Locally
 
 **Prerequisites:**  Node.js
